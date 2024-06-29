@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSME Molecular Editor</title>
+    <script type="text/javascript" src="https://unpkg.com/jsme-editor@latest/jsme.nocache.js"></script>
+</head>
+<body>
+    <h1>JSME Molecular Editor</h1>
+    <div id="jsme_container" style="width: 380px; height: 340px;"></div>
+    <button onclick="getSmiles()">Get SMILES</button>
+    <p id="output"></p>
+
+    <script>
+        let jsmeApplet;
+
+        function jsmeOnLoad() {
+            jsmeApplet = new JSApplet.JSME("jsme_container", "380px", "340px", { options: "newlook" });
+            // Load benzene
+            jsmeApplet.readGenericMolecularInput("C1=CC=CC=C1");
+        }
+
+        function getSmiles() {
+            const smiles = jsmeApplet.smiles();
+            document.getElementById('output').textContent = 'SMILES: ' + smiles;
+        }
+    </script>
+</body>
+</html>
+
