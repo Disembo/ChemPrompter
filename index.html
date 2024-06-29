@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ChemPrompter</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+        }
+
+        .sidebar {
+            width: 250px;
+            background-color: #2c3e50;
+            color: white;
+            height: 100vh;
+            position: fixed;
+            padding-top: 20px;
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            margin: 0 0 20px 0;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            padding: 15px;
+            cursor: pointer;
+            text-align: center;
+            transition: background-color 0.3s;
+        }
+
+        .sidebar ul li:hover {
+            background-color: #34495e;
+        }
+
+        .content {
+            margin-left: 280px;
+            padding: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            display: none;
+        }
+
+        .content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>ChemPrompter</h2>
+        <ul>
+            <li onclick="showContent('dashboard')">仪表板</li>
+            <li onclick="showContent('user-management')">用户管理</li>
+            <li onclick="showContent('settings')">设置</li>
+            <li onclick="showContent('reports')">报告</li>
+        </ul>
+    </div>
+    <div id="dashboard" class="content active">
+        <h1>仪表板</h1>
+        <p>这里是仪表板内容。</p>
+    </div>
+    <div id="user-management" class="content">
+        <h1>用户管理</h1>
+        <p>这里是用户管理内容。</p>
+    </div>
+    <div id="settings" class="content">
+        <h1>设置</h1>
+        <p>这里是设置内容。</p>
+    </div>
+    <div id="reports" class="content">
+        <h1>报告</h1>
+        <p>这里是报告内容。</p>
+    </div>
+
+    <script>
+        function showContent(id) {
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            document.getElementById(id).classList.add('active');
+        }
+    </script>
+</body>
+</html>
