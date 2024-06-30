@@ -43,5 +43,8 @@ console.log(silaneSynthesis);
 console.log(silaneSynthesis.new(2000))
 
 let reactions = [
-    silaneSynthesis
+    silaneSynthesis,
+    silaneSynthesis,
+    silaneSynthesis,
+    silaneSynthesis,
 ];

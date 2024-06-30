@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+    <script>
+        function switchTab(id) {
+            const contents = document.querySelectorAll('.content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            document.getElementById(id).classList.add('active');
+        }
+    </script>
+    <script src="/js/reactions.js"></script>
+    <script src="/js/render.js"></script>
+    <title>ChemPrompter</title>
+</head>
+<body>
+    <div class="sidebar">
+        <h2>ChemPrompter</h2>
+        <ul>
+            <li onclick="switchTab('browse-tab')">浏览</li>
+            <li onclick="switchTab('reaction-tab')">反应</li>
+            <li onclick="switchTab('settings-tab')">设置</li>
+        </ul>
+    </div>
