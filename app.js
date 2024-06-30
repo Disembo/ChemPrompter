@@ -1,6 +1,6 @@
 const express = require('express');
 const app = express();
-const { Reaction } = require('./public/js/reactions.js');
+const { Reaction } = require('./models/reactions.js');
 
 app.set('view engine', 'ejs');
 app.use(express.static('public')); // 提供公共文件夹中的静态文件

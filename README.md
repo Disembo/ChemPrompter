@@ -34,24 +34,26 @@
    ```
    node app.js
    ```
-   服务器将在 `http://localhost:3000` 上运行, 打开浏览器输入该网址即可.
+   服务器将在 `http://localhost:3000` 上运行, 打开浏览器输入该网址即可. 若要结束, 在终端内按下 `Ctrl+C`.
 
 ### 目录结构
 
 ```
-- ChemPrompter/
-  - app.js  (程序入口)
-  - package.json  (项目配置)
-  - public/
-    - css/  (样式表文件夹)
-    - js/   (代码文件夹)
-  - views/  (界面)
-    - index.ejs  (主界面文件)
+ChemPrompter/
+    app.js          (程序入口)
+    package.json    (项目配置)
+    models/         (程序的主要代码)
+        reaction.js
+    public/
+        css/        (样式表文件夹)
+        js/         (代码文件夹)
+    views/          (界面)
+        index.ejs   (主界面文件)
 ```
 
 ### 具体操作方法
 
-假设你在 `/public/js/your_code.js` 中编写了两个类 `MyClass1` 和 `MyClass2`.
+假设你在 `/models/your_code.js` 中编写了两个类 `MyClass1` 和 `MyClass2`.
 你需要在文件末尾添加一行
 
 ```js
@@ -61,7 +63,7 @@ module.exports = { MyClass1, MyClass2 };
 在 `app.js` 中加入如下代码
 
 ```js
-const { MyClass1, MyClass2 } = require("./public/js/your_code.js");
+const { MyClass1, MyClass2 } = require("./models/your_code.js");
 ```
 
 便可以在 `app.js` 中使用这两个类.
