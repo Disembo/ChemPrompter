@@ -32,6 +32,10 @@ app.get('/detail', (req, res) => {
         res.render('detail', { reaction: undefined });
 });
 
+app.get('/export', (req, res) => {
+    res.json(reactions);
+});
+
 app.get('/edit', (req, res) => {
     const { name, createNew } = req.query;
     if (createNew){
@@ -92,6 +96,22 @@ app.post('/save', (req, res) => {
             msg = `Reaction named "${name}" already exists!`;
     }
     // response
+    res.status(200).json({
+        success: succ,
+        message: msg,
+    });
+});
+
+app.post('/import', (req, res) => {
+    let succ = false;
+    let msg = '';
+    reactions = [];
+    req.body.forEach(r => {
+        reactions.push(
+            Object.assign(Reaction.empty(), r)
+        );
+    });
+    succ = true;
     res.status(200).json({
         success: succ,
         message: msg,

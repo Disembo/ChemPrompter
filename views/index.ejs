@@ -2,6 +2,8 @@
     <div id="browse-tab" class="content">
         <h1>浏览所有反应</h1>
         <button onclick="window.location.href='/edit?createNew=true'">➕ 新反应</button>
+        <button onclick="exportToJSON()">导出文件</button>
+        <button onclick="loadFromJSON()">打开文件</button>
         <div id="reaction-list">
             <% reactions.forEach((reaction, index) => { %>
                 <div class="reaction-item" onclick="window.location.href='/detail?name=<%= reaction.name %>'">
@@ -12,4 +14,43 @@
             <% }) %>
         </div>
     </div>
+    <script>
+        function exportToJSON() {
+            fetch('/export').then(res => res.json()).then(json => {
+                const url = window.URL.createObjectURL(new Blob([JSON.stringify(json, null, 4)], {
+                    type: 'application/json'
+                }));
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = 'reactions.json';
+                document.body.appendChild(a);
+                a.click();
+                window.URL.revokeObjectURL(url);
+            });
+        }
+
+        function loadFromJSON() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = () => {
+                const file = input.files[0];
+                const reader = new FileReader();
+                reader.onload = () => {
+                    fetch('/import', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: reader.result
+                    }).then(() => {
+                        window.location.href = '/';
+                    });
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+    </script>
 <%- include('partials/footer') %>
