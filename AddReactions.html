@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSME Molecular Editor</title>
+    <script type="text/javascript" src="https://unpkg.com/jsme-editor@latest/jsme.nocache.js"></script>
+    <style>
+        table {      
+            column-width: auto;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 4px;
+            width: 2%;
+            text-align: left;
+        }
+        th {
+            font-size: 10px;
+            background-color: #f2f2f2;
+        }
+        td input[type="text"],
+        td input[type="number"] {
+            width: 100%; /* Adjust input width */
+            box-sizing: border-box; /* Ensure input width includes padding */
+        }
+        button {
+            padding: 2px;
+            margin: 2px;
+        }
+        #jsme_container {
+            float: left;
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Add a Reaction</h1>
+    <div id="jsme_container" ></div>
+    <button onclick="addSubstrates()">Add to Substrates</button>
+    <button onclick="addProducts()">Add to Products</button>
+    <button onclick="addAgents()">Add to Agents</button>
+    <button onclick="finish()">Finish</button>
+
+
+    <table id="forSubstrates">
+        <thead>
+            <tr>
+                <th>Substrates</th>
+                <th>mass</th>
+                <th>volume</th>
+                <th>mol</th>
+                <th>eq</th>
+                <th>molecular mass</th>
+                <th>c</th>
+                <th>action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be added here -->
+        </tbody>
+    </table>
+    <button onclick="addRow_Substrates()">Add Row</button>
+    <table id="forProducts">
+        <thead>
+            <tr>
+                <th>Products</th>
+                <th>mass</th>
+                <th>volume</th>
+                <th>mol</th>
+                <th>eq</th>
+                <th>molecular mass</th>
+                <th>c</th>
+                <th>action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be added here -->
+        </tbody>
+    </table>
+    <button onclick="addRow_Products()">Add Row</button>
+    <table id="forAgents">
+        <thead>
+            <tr>
+                <th>Agents</th>
+                <th>mass</th>
+                <th>volume</th>
+                <th>mol</th>
+                <th>eq</th>
+                <th>molecular mass</th>
+                <th>c</th>
+                <th>action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be added here -->
+        </tbody>
+    </table>
+    <button onclick="addRow_Agents()">Add Row</button>
+    <table id="forConditions">
+        <thead>
+            <tr>
+                <th>Time</th>
+                <th>Temperature</th>
+                <th>action</th>
+
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be added here -->
+        </tbody>
+    </table>
+    <button onclick="addRow_Conditions()">Add Row</button>
+    <script src="./public/js/AddReactions.js"></script>
+
+</body>
+</html>
+
+
