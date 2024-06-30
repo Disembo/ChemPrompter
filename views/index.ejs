@@ -3,56 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <title>ChemPrompter</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            display: flex;
-        }
-
-        .sidebar {
-            width: 250px;
-            background-color: #2c3e50;
-            color: white;
-            height: 100vh;
-            position: fixed;
-            padding-top: 20px;
-        }
-
-        .sidebar h2 {
-            text-align: center;
-            margin: 0 0 20px 0;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        .sidebar ul li {
-            padding: 15px;
-            cursor: pointer;
-            text-align: center;
-            transition: background-color 0.3s;
-        }
-
-        .sidebar ul li:hover {
-            background-color: #34495e;
-        }
-
-        .content {
-            margin-left: 280px;
-            padding: 20px;
-            width: 100%;
-            box-sizing: border-box;
-            display: none;
-        }
-
-        .content.active {
-            display: block;
-        }
-    </style>
 </head>
 <body>
     <div class="sidebar">
@@ -66,6 +18,15 @@
     <div id="browse-tab" class="content active">
         <h1>所有反应</h1>
         <p>Here may goes a scroll list of reactions</p>
+        <div id="reaction-list">
+            <% reactions.forEach(reaction => { %>
+                <div class="reaction-item">
+                    <h3><%= reaction.name %></h3>
+                    <p>Substrates: <%= reaction.substrates %></p>
+                    <p>Products: <%= reaction.products %></p>
+                </div>
+            <% }) %>
+        </div>
     </div>
     <div id="edit-tab" class="content">
         <h1>反应信息</h1>
