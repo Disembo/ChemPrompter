@@ -11,6 +11,8 @@
     <div id="jsme_container" style="width: 380px; height: 340px;"></div>
     <button onclick="getSmiles()">Get SMILES</button>
     <p id="output"></p>
+    <button onclick="showSVG()">Show SVG</button>
+    <div id="svg_container" style="width: 380px; height: 340px;"></div>
 
     <script>
         let jsmeApplet;
@@ -24,6 +26,11 @@
         function getSmiles() {
             const smiles = jsmeApplet.smiles();
             document.getElementById('output').textContent = 'SMILES: ' + smiles;
+        }
+
+        function showSVG() {
+            elm = document.getElementById("svg_container");
+            elm.innerHTML = jsmeApplet.getMolecularAreaGraphicsString();
         }
     </script>
 </body>

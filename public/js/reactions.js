@@ -37,9 +37,11 @@ let silaneSynthesisDosage = {mass: [1000, 0, 258, 0],volume: [0, 35, 0, 10],mol:
 // mass, volume, mole, molecular mass, concentration, equivalence
 
 
-silaneSynthesis = new Reaction("Silane Synthesis", silaneSynthesisSubstances, silaneSynthesisConditions, silaneSynthesisDosage);
+let silaneSynthesis = new Reaction("Silane Synthesis", silaneSynthesisSubstances, silaneSynthesisConditions, silaneSynthesisDosage);
 console.log(silaneSynthesis);
 
 console.log(silaneSynthesis.new(2000))
 
-module.exports = { Reaction };
+let reactions = [
+    silaneSynthesis
+];
