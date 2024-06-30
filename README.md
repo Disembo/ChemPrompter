@@ -40,18 +40,24 @@
 
 ```
 ChemPrompter/
-    app.js          (程序入口)
-    package.json    (项目配置)
-    models/         (程序的主要代码)
-        reaction.js
-    public/
-        css/        (样式表文件夹)
-        js/         (代码文件夹)
-    views/          (界面)
-        index.ejs   (主界面文件)
+    app.js                    (服务器主程序)
+    package.json              (项目配置)
+    models/                   (服务端代码)
+        reaction.js           
+    public/                   (前端代码)
+        css/                  
+        js/                   
+    views/                    (界面)
+        partials/             (界面头尾, 可复用)
+            header.ejs        
+            footer.ejs        
+        index.ejs             
+        detail.ejs            
+        edit.ejs              
+        settings.ejs          
 ```
 
-### 具体操作方法
+### 服务端代码
 
 假设你在 `/models/your_code.js` 中编写了两个类 `MyClass1` 和 `MyClass2`.
 你需要在文件末尾添加一行

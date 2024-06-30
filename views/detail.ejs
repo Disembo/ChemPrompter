@@ -1,0 +1,68 @@
+<%- include('partials/header') %>
+    <div id="detail-tab" class="content">
+        <h1>反应信息</h1>
+        
+        <% if (reaction) { %>
+
+        <button onclick="window.location.href='/edit?name=<%= reaction.name %>'">编辑</button>
+        <button onclick="deleteReaction('<%= reaction.name %>')" style="color: brown;">删除</button>
+        <div id="reaction-info">
+            <h2><%= reaction.name %></h2>
+
+            <div class="info-item">
+                <p>底物: <%= reaction.substrates %></p>
+                <svg width="300" height="300" data-smiles="<%= reaction.substrates[0] %>"></svg>
+            </div>
+
+            <div class="info-item">
+                <p>产物: <%= reaction.products %></p>
+                <svg width="300" height="300" data-smiles="<%= reaction.products[0] %>"></svg>
+            </div>
+            
+            <div class="info-item">
+                <p>试剂: <%= reaction.agents %></p>
+            </div>
+
+            <div class="info-item">
+                <p>条件: <%= reaction.conditions %></p>
+            </div>
+
+            <div class="info-item">
+                <p>用量: <%= reaction.dosage %></p>
+            </div>
+            
+        </div>
+
+        <% } else{ %>
+            
+            <p>选择一个反应来展示</p>
+
+        <% } %>
+    </div>
+    <script type="text/javascript" src="/js/smiles-drawer.min.js"></script>
+    <script>
+        SmiDrawer.apply();
+
+        async function deleteReaction(name) {
+            if (!confirm("确认删除")) return;
+            fetch('/delete', {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    name
+                })
+            }).then(res => res.json()).then(res => {
+                if (!res.success) {
+                    alert(res.message);
+                } else if (close) {
+                    window.location.href = '/';
+                }
+            }).catch(err => {
+                alert('删除失败！');
+                console.error(err);
+            });
+        }
+    </script>
+<%- include('partials/footer') %>

@@ -1,17 +1,15 @@
 <%- include('partials/header') %>
-    <div id="browse-tab" class="content active">
-        <h1>所有反应</h1>
-        <button onclick="createNewReaction()">新反应</button>
-        <button onclick="manageReactions()">批量管理</button>
+    <div id="browse-tab" class="content">
+        <h1>浏览所有反应</h1>
+        <button onclick="window.location.href='/edit?createNew=true'">➕ 新反应</button>
         <div id="reaction-list">
+            <% reactions.forEach((reaction, index) => { %>
+                <div class="reaction-item" onclick="window.location.href='/detail?name=<%= reaction.name %>'">
+                    <h3><%= reaction.name %></h3>
+                    <p>Substrates: <%= reaction.substrates %></p>
+                    <p>Products: <%= reaction.products %></p>
+                </div>
+            <% }) %>
         </div>
-    </div>
-    <div id="reaction-tab" class="content">
-        <h1>反应信息</h1>
-        <div id="reaction-info">选择一个反应来展示</div>
-    </div>
-    <div id="settings-tab" class="content">
-        <h1>设置</h1>
-        <p>有啥可设置的呢</p>
     </div>
 <%- include('partials/footer') %>

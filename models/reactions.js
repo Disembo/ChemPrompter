@@ -1,4 +1,8 @@
 class Reaction{
+    static empty() {
+        return new this('', {substrates: [], products: [], agents: []}, [], {mass: [], volume: [], mol: [], molecular_mass: [], concentration: [], eq: []});
+    }
+    
     constructor(name, substances, conditions, dosage) {
         this.name = name;
         this.substrates = substances.substrates;
@@ -27,7 +31,6 @@ class Reaction{
     }
 }
 
-
 let silaneSynthesisSubstrates = ['CN(C)c1cccc(Br)c1'];
 let silaneSynthesisProducts = ['CN(C)c2cccc([Si](C)(C)c1cccc(N(C)C)c1)c2'];
 let silaneSynthesisAgents = ['n-BuLi', 'THF','C[Si](C)(Cl)Cl'];
@@ -38,13 +41,12 @@ let silaneSynthesisDosage = {mass: [1000, 0, 258, 0],volume: [0, 35, 0, 10],mol:
 
 
 let silaneSynthesis = new Reaction("Silane Synthesis", silaneSynthesisSubstances, silaneSynthesisConditions, silaneSynthesisDosage);
-console.log(silaneSynthesis);
+// console.log(silaneSynthesis);
 
-console.log(silaneSynthesis.new(2000))
+// console.log(silaneSynthesis.new(2000))
 
 let reactions = [
-    silaneSynthesis,
-    silaneSynthesis,
-    silaneSynthesis,
-    silaneSynthesis,
+    silaneSynthesis
 ];
+
+module.exports = { reactions, Reaction };

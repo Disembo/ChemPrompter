@@ -1,0 +1,72 @@
+<%- include('partials/header') %>
+    <div id="edit-tab" class="content">
+        <h1>编辑反应</h1>
+        <button onclick="save()">保存</button>
+        <button onclick="save(true)">保存并关闭</button>
+        <button onclick="leave()" style="color: brown;">关闭</button>
+        <div id="reaction-form">
+            <div class="form-item">
+                <label for="name">名称</label>
+                <input type="text" id="name" name="name" value="<%= reaction.name %>">
+            </div>
+
+            <div class="form-item">
+                <label for="substrates">底物</label>
+                <input type="text" id="substrates" name="substrates" value="<%= reaction.substrates %>">
+            </div>
+            
+            <div class="form-item">
+                <label for="products">产物</label>
+                <input type="text" id="products" name="products" value="<%= reaction.products %>">
+            </div>
+            
+            <div class="form-item">
+                <label for="agents">试剂</label>
+                <input type="text" id="agents" name="agents" value="<%= reaction.agents %>">
+            </div>
+            
+            <div class="form-item">
+                <label for="conditions">条件</label>
+                <input type="text" id="conditions" name="conditions" value="<%= reaction.conditions %>">
+            </div>
+        </div>
+    </div>
+    <script>
+        async function leave() {
+            if (confirm('未保存的更改将会丢失！'))
+                window.location.href = '/';
+        }
+
+        async function save(close = false) {
+            const oldName = "<%= reaction.name %>";
+            const name = document.getElementById('name').value;
+            const substrates = document.getElementById('substrates').value;
+            const products = document.getElementById('products').value;
+            const conditions = document.getElementById('conditions').value;
+            const agents = document.getElementById('agents').value;
+            fetch('/save', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    oldName,
+                    name,
+                    substrates,
+                    products,
+                    conditions,
+                    agents,
+                })
+            }).then(res => res.json()).then(res => {
+                if (!res.success) {
+                    alert(res.message);
+                } else if (close) {
+                    window.location.href = `/detail?name=${name}`;
+                }
+            }).catch(err => {
+                alert('保存失败！');
+                console.error(err);
+            });
+        }
+    </script>
+<%- include('partials/footer') %>
