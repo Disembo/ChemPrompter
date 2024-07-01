@@ -9,28 +9,62 @@
         <div id="reaction-info">
             <h2><%= reaction.name %></h2>
 
-            <div class="info-item">
-                <p>底物: <%= reaction.substrates %></p>
-                <svg width="300" height="300" data-smiles="<%= reaction.substrates[0] %>"></svg>
-            </div>
-
-            <div class="info-item">
-                <p>产物: <%= reaction.products %></p>
-                <svg width="300" height="300" data-smiles="<%= reaction.products[0] %>"></svg>
-            </div>
+            <% [['底物', reaction.substrates, 'Substrates'],
+                ['产物', reaction.products  , 'Products'  ],
+                ['试剂', reaction.agents    , 'Agents'    ]].forEach(element => { %>
+                <div class="info-item">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th><%= element[2] %></th>
+                                <th>mass</th>
+                                <th>volume</th>
+                                <th>mol</th>
+                                <th>eq</th>
+                                <th>molecular mass</th>
+                                <th>c</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <% reaction.transpose(element[1]).forEach(row => { %>
+                                <tr>
+                                    <% if (row[0].startsWith("[SMILES]")) { %>
+                                        <td><svg width="360" height="300" data-smiles="<%= row[0].slice(8) %>"></svg></td>
+                                    <% } else { %>
+                                        <td><%= row[0] %></td>
+                                    <% } %>
+                                    <td><%= row[1] %></td>
+                                    <td><%= row[2] %></td>
+                                    <td><%= row[3] %></td>
+                                    <td><%= row[4] %></td>
+                                    <td><%= row[5] %></td>
+                                    <td><%= row[6] %></td>
+                                </tr>                        
+                            <% }) %>
+                        </tbody>
+                    </table>
+                </div>
+            <% }); %>
             
             <div class="info-item">
-                <p>试剂: <%= reaction.agents %></p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Temperature</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% reaction.conditions.forEach(cond => { %>
+                            <tr>
+                                <td><%= cond[0] %></td>
+                                <td><%= cond[0] %></td>
+                            </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
             </div>
 
-            <div class="info-item">
-                <p>条件: <%= reaction.conditions %></p>
-            </div>
-
-            <div class="info-item">
-                <p>用量: <%= reaction.dosage %></p>
-            </div>
-            
         </div>
 
         <% } else{ %>

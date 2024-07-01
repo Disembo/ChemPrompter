@@ -1,72 +1,134 @@
 <%- include('partials/header') %>
-    <div id="edit-tab" class="content">
-        <h1>编辑反应</h1>
-        <button onclick="save()">保存</button>
-        <button onclick="save(true)" style="color: darkgreen;">保存并关闭</button>
-        <button onclick="leave()" style="color: brown;">关闭</button>
-        <div id="reaction-form">
-            <div class="form-item">
-                <label for="name">名称</label>
-                <input type="text" id="name" name="name" value="<%= reaction.name %>">
-            </div>
+<!-- <script type="text/javascript" src="/js/jsme.nocache.js"></script> -->
+<script type="text/javascript" src="https://unpkg.com/jsme-editor@latest/jsme.nocache.js"></script>
+<div id="edit-tab" class="content">
+    <h1>编辑反应</h1>
+    <button onclick="save()">保存</button>
+    <button onclick="save(true)" style="color: darkgreen">保存并关闭</button>
+    <button onclick="window.location.href='/'" style="color: brown">关闭</button>
 
-            <div class="form-item">
-                <label for="substrates">底物</label>
-                <input type="text" id="substrates" name="substrates" value="<%= reaction.substrates %>">
-            </div>
-            
-            <div class="form-item">
-                <label for="products">产物</label>
-                <input type="text" id="products" name="products" value="<%= reaction.products %>">
-            </div>
-            
-            <div class="form-item">
-                <label for="agents">试剂</label>
-                <input type="text" id="agents" name="agents" value="<%= reaction.agents %>">
-            </div>
-            
-            <div class="form-item">
-                <label for="conditions">条件</label>
-                <input type="text" id="conditions" name="conditions" value="<%= reaction.conditions %>">
-            </div>
+    <div id="reaction-form">
+        <div class="form-item">
+            <label for="name">名称</label>
+            <input type="text" id="name" name="name" value="<%= reaction.name %>"/>
         </div>
-    </div>
-    <script>
-        async function leave() {
-            if (confirm('未保存的更改将会丢失！'))
-                window.location.href = '/';
-        }
 
-        async function save(close = false) {
-            const oldName = "<%= reaction.name %>";
-            const name = document.getElementById('name').value;
-            const substrates = document.getElementById('substrates').value;
-            const products = document.getElementById('products').value;
-            const conditions = document.getElementById('conditions').value;
-            const agents = document.getElementById('agents').value;
-            fetch('/save', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    oldName,
-                    name,
-                    substrates,
-                    products,
-                    conditions,
-                    agents,
-                })
-            }).then(res => res.json()).then(res => {
-                if (!res.success) {
-                    alert(res.message);
-                } else if (close) {
-                    window.location.href = `/detail?name=${name}`;
-                }
-            }).catch(err => {
-                alert('保存失败！');
-                console.error(err);
-            });
+        <div id="jsme_container"></div>
+        <button style="display: inline block;" onclick="addSubstrates()">Add to Substrates</button>
+        <button style="display: inline block;" onclick="addProducts()">Add to Products</button>
+        <button style="display: inline block;" onclick="addAgents()">Add to Agents</button>
+        <!-- <button onclick="finish()">Finish</button> -->
+
+        <% [['底物', reaction.substrates, 'Substrates'],
+            ['产物', reaction.products  , 'Products'  ],
+            ['试剂', reaction.agents    , 'Agents'    ]].forEach(element => { %>
+            <div class="form-item">
+                <button class="small-button" onclick="addRow_<%= element[2] %>()">+</button>
+                <table id="for<%= element[2] %>" style="margin-left: 10px;">
+                    <thead>
+                        <tr>
+                            <th>Substrates</th>
+                            <th>mass</th>
+                            <th>volume</th>
+                            <th>mol</th>
+                            <th>eq</th>
+                            <th>molecular mass</th>
+                            <th>c</th>
+                            <th>action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% reaction.transpose(element[1]).forEach(row => { %>
+                            <tr>
+                                <td><input type="text" placeholder="name"    value="<%= row[0] ? row[0] : '' %>" /></td>
+                                <td><input type="number" placeholder="mg"    value="<%= row[1] ? row[1] : '' %>" /></td>
+                                <td><input type="number" placeholder="mL"    value="<%= row[2] ? row[2] : '' %>" /></td>
+                                <td><input type="number" placeholder="mmol"  value="<%= row[3] ? row[3] : '' %>" /></td>
+                                <td><input type="number" placeholder="1"     value="<%= row[4] ? row[4] : '' %>" /></td>
+                                <td><input type="number" placeholder="g/mol" value="<%= row[5] ? row[5] : '' %>" /></td>
+                                <td><input type="number" placeholder="mol/L" value="<%= row[6] ? row[6] : '' %>" /></td>
+                                <td>
+                                    <button class="small-button" onclick="editRow(this)">Edit</button>
+                                    <button class="small-button" onclick="deleteRow(this)">Delete</button>
+                                </td>
+                            </tr>                        
+                        <% }) %>
+                    </tbody>
+                </table>
+            </div>
+        <% }); %>
+        
+        <div class="form-item">
+            <button class="small-button" onclick="addRow_Conditions()">+</button>
+            <table id="forConditions" style="margin-left: 10px;">
+                <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Temperature</th>
+                        <th>action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% reaction.conditions.forEach(cond => { %>
+                        <tr>
+                            <td><input type="number" placeholder="hour"       value="<%= cond[0] ? cond[0] : '' %>" /></td>
+                            <td><input type="number" placeholder="centigrade" value="<%= cond[0] ? cond[0] : '' %>" /></td>
+                            <td>
+                                <button class="small-button" onclick="editRow(this)">Edit</button>
+                                <button class="small-button" onclick="deleteRow(this)">Delete</button>
+                            </td>
+                        </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+        
+    </div>
+</div>
+<script type="text/javascript" src="/js/AddReactions.js"></script>
+<script>
+    // window.addEventListener("beforeunload", e => {
+    //     e.preventDefault();
+    //     e.returnValue = "";
+    // });
+
+    async function save(close = false) {
+        const name = document.getElementById("name").value;
+        if (!name)
+        {
+            alert("名称不能为空！");
+            return;
         }
-    </script>
+        fetch("/save", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                oldName: "<%= reaction.name %>",
+                data: {
+                    name: name,
+                    substrates: transposeArray(tableToArray("forSubstrates")),
+                    products: transposeArray(tableToArray("forProducts")),
+                    agents: transposeArray(tableToArray("forAgents")),
+                    conditions: tableToArray_Condition("forConditions"),
+                },
+            }),
+        }).then((res) => res.json()).then((res) => {
+            if (!res.success) {
+                alert(res.message);
+            } else {
+                _oldName = name;
+                if (close)
+                    window.location.href = `/detail?name=${name}`;
+                else
+                    window.location.href = `/edit?name=${name}`;
+            }
+        })
+        .catch((err) => {
+            alert("保存失败！");
+            console.error(err);
+        });
+}
+</script>
 <%- include('partials/footer') %>

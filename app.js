@@ -70,10 +70,10 @@ app.delete('/delete', (req, res) => {
 });
 
 app.post('/save', (req, res) => {
-    const { oldName, name, substrates, products, agents, conditions } = req.body;
-    let substances = { substrates: substrates.split(','), products: products.split(','), agents: agents.split(',') };
-    let dosage = { mass: [], volume: [], mol: [], molecular_mass: [], concentration: [], eq: [] };
-    let reaction = new Reaction(name, substances, conditions, dosage);
+    const { oldName, data } = req.body;
+    console.log(oldName, data);
+    let reaction = Reaction.fromData(data);
+    const name = reaction.name;
     let succ = false;
     let msg = "";
     

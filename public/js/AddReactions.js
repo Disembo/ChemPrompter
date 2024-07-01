@@ -46,82 +46,52 @@ let products;
 let agents;
 let conditions;
 
-function addRow_Agents() {
+function setRowData(row, data) {
+    const cell1 = row.insertCell(0);// agents
+    const cell2 = row.insertCell(1);// mass
+    const cell3 = row.insertCell(2);// volume
+    const cell4 = row.insertCell(3);// mol
+    const cell5 = row.insertCell(4);// molecular mass
+    const cell6 = row.insertCell(5);// concentration
+    const cell7 = row.insertCell(6);// eq
+    const cell8 = row.insertCell(7);
+
+    cell1.innerHTML = `<input type="text" placeholder="name" value="${data[0] ? data[0] : ''}">`;
+    cell2.innerHTML = `<input type="number" placeholder="mg" value="${data[1] ? data[1] : ''}">`;
+    cell3.innerHTML = `<input type="number" placeholder="mL" value="${data[2] ? data[2] : ''}">`;
+    cell4.innerHTML = `<input type="number" placeholder="mmol" value="${data[3] ? data[3] : ''}">`;
+    cell6.innerHTML = `<input type="number" placeholder="g/mol" value="${data[4] ? data[4] : ''}">`;
+    cell7.innerHTML = `<input type="number" placeholder="mol/L" value="${data[5] ? data[5] : ''}">`;
+    cell5.innerHTML = `<input type="number" placeholder="1" value="${data[6] ? data[6] : ''}">`;
+    cell8.innerHTML = `<button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button>`;
+}
+
+function addRow_Agents(ag = []) {
     const table = document.getElementById("forAgents").getElementsByTagName('tbody')[0];
     const newRow = table.insertRow();
-    const cell1 = newRow.insertCell(0);// agents
-    const cell2 = newRow.insertCell(1);// mass
-    const cell3 = newRow.insertCell(2);// volume
-    const cell4 = newRow.insertCell(3);// mol
-    const cell5 = newRow.insertCell(4);// molecular mass
-    const cell6 = newRow.insertCell(5);// concentration
-    const cell7 = newRow.insertCell(6);// eq
-    const cell8 = newRow.insertCell(7)
-
-    cell1.innerHTML = `<input type="text" placeholder="name">`;
-    cell2.innerHTML = `<input type="number" placeholder="mg">`;
-    cell3.innerHTML = `<input type="number" placeholder="mL">`;
-    cell4.innerHTML = `<input type="number" placeholder="mmol">`;
-    cell6.innerHTML = `<input type="number" placeholder="g/mol">`;
-    cell7.innerHTML = `<input type="number" placeholder="mol/L">`;
-    cell5.innerHTML = `<input type="number" placeholder="1">`;
-    cell8.innerHTML = `<button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button>`;
+    setRowData(newRow, ag);
 }
 
-function addRow_Substrates() {
+function addRow_Substrates(sub = []) {
     const table = document.getElementById("forSubstrates").getElementsByTagName('tbody')[0];
     const newRow = table.insertRow();
-    const cell1 = newRow.insertCell(0);// agents
-    const cell2 = newRow.insertCell(1);// mass
-    const cell3 = newRow.insertCell(2);// volume
-    const cell4 = newRow.insertCell(3);// mol
-    const cell5 = newRow.insertCell(4);// molecular mass
-    const cell6 = newRow.insertCell(5);// concentration
-    const cell7 = newRow.insertCell(6);// eq
-    const cell8 = newRow.insertCell(7)
-
-    cell1.innerHTML = `<input type="text" placeholder="name">`;
-    cell2.innerHTML = `<input type="number" placeholder="mg">`;
-    cell3.innerHTML = `<input type="number" placeholder="mL">`;
-    cell4.innerHTML = `<input type="number" placeholder="mmol">`;
-    cell6.innerHTML = `<input type="number" placeholder="g/mol">`;
-    cell7.innerHTML = `<input type="number" placeholder="mol/L">`;
-    cell5.innerHTML = `<input type="number" placeholder="1">`;
-    cell8.innerHTML = `<button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button>`;
+    setRowData(newRow, sub);
 }
 
-function addRow_Products() {
+function addRow_Products(prod = []) {
     const table = document.getElementById("forProducts").getElementsByTagName('tbody')[0];
     const newRow = table.insertRow();
-    const cell1 = newRow.insertCell(0);// agents
-    const cell2 = newRow.insertCell(1);// mass
-    const cell3 = newRow.insertCell(2);// volume
-    const cell4 = newRow.insertCell(3);// mol
-    const cell5 = newRow.insertCell(4);// molecular mass
-    const cell6 = newRow.insertCell(5);// concentration
-    const cell7 = newRow.insertCell(6);// eq
-    const cell8 = newRow.insertCell(7)
-
-    
-    cell1.innerHTML = `<input type="text" placeholder="name">`;
-    cell2.innerHTML = `<input type="number" placeholder="mg">`;
-    cell3.innerHTML = `<input type="number" placeholder="mL">`;
-    cell4.innerHTML = `<input type="number" placeholder="mmol">`;
-    cell6.innerHTML = `<input type="number" placeholder="g/mol">`;
-    cell7.innerHTML = `<input type="number" placeholder="mol/L">`;
-    cell5.innerHTML = `<input type="number" placeholder="1">`;
-    cell8.innerHTML = `<button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button>`;
+    setRowData(newRow, prod);
 }
-function addRow_Conditions() {
+function addRow_Conditions(cond = []) {
     const table = document.getElementById("forConditions").getElementsByTagName('tbody')[0];
     const newRow = table.insertRow();
     const cell1 = newRow.insertCell(0);// time
     const cell2 = newRow.insertCell(1);// temperature
     const cell3 = newRow.insertCell(2);
 
-
-    cell1.innerHTML = `<input type="number" placeholder="hour">`;
-    cell2.innerHTML = `<input type="number" placeholder="centigrade">`;
+    cell1.innerHTML = `<input type="number" placeholder="hour" value="${cond[0] ? cond[0] : ''}">`;
+    cell2.innerHTML = `<input type="number" placeholder="centigrade" value="${cond[1] ? cond[1] : ''}">`;
     cell3.innerHTML = `<button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button>`;
 }
 
@@ -155,85 +125,84 @@ function getSmiles() {
 }
 
 function addSubstrates(){
-    smiles = getSmiles()
+    smiles = "[SMILES]" + getSmiles()
+    addRow_Substrates([smiles]);
     //alert (smiles)
     //console.log(smiles)
-    const table = document.getElementById("forSubstrates").getElementsByTagName('tbody')[0];
-    const newRow = table.insertRow();
-    const cell1 = newRow.insertCell(0);// agents
-    const cell2 = newRow.insertCell(1);// mass
-    const cell3 = newRow.insertCell(2);// volume
-    const cell4 = newRow.insertCell(3);// mol
-    const cell5 = newRow.insertCell(4);// molecular mass
-    const cell6 = newRow.insertCell(5);// concentration
-    const cell7 = newRow.insertCell(6);// eq
-    const cell8 = newRow.insertCell(7)
+    // const table = document.getElementById("forSubstrates").getElementsByTagName('tbody')[0];
+    // const newRow = table.insertRow();
+    // const cell1 = newRow.insertCell(0);// agents
+    // const cell2 = newRow.insertCell(1);// mass
+    // const cell3 = newRow.insertCell(2);// volume
+    // const cell4 = newRow.insertCell(3);// mol
+    // const cell5 = newRow.insertCell(4);// molecular mass
+    // const cell6 = newRow.insertCell(5);// concentration
+    // const cell7 = newRow.insertCell(6);// eq
+    // const cell8 = newRow.insertCell(7)
 
     
-    cell1.innerHTML = smiles;
-    cell2.innerHTML = `<input type="number" placeholder="mg">`;
-    cell3.innerHTML = `<input type="number" placeholder="mL">`;
-    cell4.innerHTML = `<input type="number" placeholder="mmol">`;
-    cell6.innerHTML = `<input type="number" placeholder="g/mol">`;
-    cell7.innerHTML = `<input type="number" placeholder="mol/L">`;
-    cell5.innerHTML = `<input type="number" placeholder="1">`;
-    cell8.innerHTML = `<button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button>`;
-
-    
-
-
+    // cell1.innerHTML = smiles;
+    // cell2.innerHTML = `<input type="number" placeholder="mg">`;
+    // cell3.innerHTML = `<input type="number" placeholder="mL">`;
+    // cell4.innerHTML = `<input type="number" placeholder="mmol">`;
+    // cell6.innerHTML = `<input type="number" placeholder="g/mol">`;
+    // cell7.innerHTML = `<input type="number" placeholder="mol/L">`;
+    // cell5.innerHTML = `<input type="number" placeholder="1">`;
+    // cell8.innerHTML = `<button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button>`;
 }
+
 function addProducts(){
-    smiles = getSmiles()
+    smiles = "[SMILES]" + getSmiles()
     //alert (smiles)
     //console.log(smiles)
-    const table = document.getElementById("forProducts").getElementsByTagName('tbody')[0];
-    const newRow = table.insertRow();
-    const cell1 = newRow.insertCell(0);// agents
-    const cell2 = newRow.insertCell(1);// mass
-    const cell3 = newRow.insertCell(2);// volume
-    const cell4 = newRow.insertCell(3);// mol
-    const cell5 = newRow.insertCell(4);// molecular mass
-    const cell6 = newRow.insertCell(5);// concentration
-    const cell7 = newRow.insertCell(6);// eq
-    const cell8 = newRow.insertCell(7)
+    addRow_Products([smiles]);
+    // const table = document.getElementById("forProducts").getElementsByTagName('tbody')[0];
+    // const newRow = table.insertRow();
+    // const cell1 = newRow.insertCell(0);// agents
+    // const cell2 = newRow.insertCell(1);// mass
+    // const cell3 = newRow.insertCell(2);// volume
+    // const cell4 = newRow.insertCell(3);// mol
+    // const cell5 = newRow.insertCell(4);// molecular mass
+    // const cell6 = newRow.insertCell(5);// concentration
+    // const cell7 = newRow.insertCell(6);// eq
+    // const cell8 = newRow.insertCell(7)
 
     
-    cell1.innerHTML = smiles;
-    cell2.innerHTML = `<input type="number" placeholder="mg">`;
-    cell3.innerHTML = `<input type="number" placeholder="mL">`;
-    cell4.innerHTML = `<input type="number" placeholder="mmol">`;
-    cell6.innerHTML = `<input type="number" placeholder="g/mol">`;
-    cell7.innerHTML = `<input type="number" placeholder="mol/L">`;
-    cell5.innerHTML = `<input type="number" placeholder="1">`;
-    cell8.innerHTML = `<button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button>`;
-
+    // cell1.innerHTML = smiles;
+    // cell2.innerHTML = `<input type="number" placeholder="mg">`;
+    // cell3.innerHTML = `<input type="number" placeholder="mL">`;
+    // cell4.innerHTML = `<input type="number" placeholder="mmol">`;
+    // cell6.innerHTML = `<input type="number" placeholder="g/mol">`;
+    // cell7.innerHTML = `<input type="number" placeholder="mol/L">`;
+    // cell5.innerHTML = `<input type="number" placeholder="1">`;
+    // cell8.innerHTML = `<button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button>`;
 }
+
 function addAgents(){
-    smiles = getSmiles()
+    smiles = "[SMILES]" + getSmiles()
+    addRow_Agents([smiles]);
     //alert (smiles)
     //console.log(smiles)
-    const table = document.getElementById("forAgents").getElementsByTagName('tbody')[0];
-    const newRow = table.insertRow();
-    const cell1 = newRow.insertCell(0);// agents
-    const cell2 = newRow.insertCell(1);// mass
-    const cell3 = newRow.insertCell(2);// volume
-    const cell4 = newRow.insertCell(3);// mol
-    const cell5 = newRow.insertCell(4);// molecular mass
-    const cell6 = newRow.insertCell(5);// concentration
-    const cell7 = newRow.insertCell(6);// eq
-    const cell8 = newRow.insertCell(7)
+    // const table = document.getElementById("forAgents").getElementsByTagName('tbody')[0];
+    // const newRow = table.insertRow();
+    // const cell1 = newRow.insertCell(0);// agents
+    // const cell2 = newRow.insertCell(1);// mass
+    // const cell3 = newRow.insertCell(2);// volume
+    // const cell4 = newRow.insertCell(3);// mol
+    // const cell5 = newRow.insertCell(4);// molecular mass
+    // const cell6 = newRow.insertCell(5);// concentration
+    // const cell7 = newRow.insertCell(6);// eq
+    // const cell8 = newRow.insertCell(7)
 
     
-    cell1.innerHTML = smiles;
-    cell2.innerHTML = `<input type="number" placeholder="mg">`;
-    cell3.innerHTML = `<input type="number" placeholder="mL">`;
-    cell4.innerHTML = `<input type="number" placeholder="mmol">`;
-    cell6.innerHTML = `<input type="number" placeholder="g/mol">`;
-    cell7.innerHTML = `<input type="number" placeholder="mol/L">`;
-    cell5.innerHTML = `<input type="number" placeholder="1">`;
-    cell8.innerHTML = `<button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button>`;
-
+    // cell1.innerHTML = smiles;
+    // cell2.innerHTML = `<input type="number" placeholder="mg">`;
+    // cell3.innerHTML = `<input type="number" placeholder="mL">`;
+    // cell4.innerHTML = `<input type="number" placeholder="mmol">`;
+    // cell6.innerHTML = `<input type="number" placeholder="g/mol">`;
+    // cell7.innerHTML = `<input type="number" placeholder="mol/L">`;
+    // cell5.innerHTML = `<input type="number" placeholder="1">`;
+    // cell8.innerHTML = `<button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button>`;
 }
 
 function tableToArray(tableId) {
@@ -246,7 +215,7 @@ function tableToArray(tableId) {
         // Iterate through cells of current row
         for (let j = 0; j < row.cells.length-1; j++) {
             if (j == 0){
-                rowData.push(row.cells[j].textContent);
+                rowData.push(row.cells[j].querySelector('input[type="text"]').value);
             }
             else{
                 const inputElement = row.cells[j].querySelector('input[type="number"]');
@@ -310,19 +279,19 @@ function transposeArray(array) {
 function finish(){
     // Usage example
     substrates = tableToArray("forSubstrates");
-    //alert ('Substrates: '+substrates)
     products = tableToArray("forProducts");
-    //alert ('Products: '+products)
     agents = tableToArray("forAgents");
-    //alert ('Agents: '+agents)
     conditions = tableToArray_Condition("forConditions");
-    //alert ('Conditions: '+conditions)
-    console.log(substrates,products,agents,conditions);
+    // console.log(substrates,products,agents,conditions);
 
     substrates = transposeArray(substrates);
     products = transposeArray(products);
     agents = transposeArray(agents);
-    console.log(substrates,products,agents,conditions);
+    // console.log(substrates,products,agents,conditions);
+    console.log(substrates)
+    console.log(products)
+    console.log(agents)
+    console.log(conditions)
 
     alert('Goodjob  !!!')
     let newReaction = new Reaction(substrates, products, agents, conditions);
