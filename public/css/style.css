@@ -129,8 +129,9 @@ button:hover {
 }
 
 #jsme_container {
-    /* float: left; */
-    margin: 15px;
-    margin-left: 0px;
+    margin-right: 15px;
+    margin-bottom: 15px;
     display: block;
+    flex: 1;
+    height: 400px;
 }

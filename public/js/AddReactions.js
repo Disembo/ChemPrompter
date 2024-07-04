@@ -63,7 +63,7 @@ function setRowData(row, data) {
     cell6.innerHTML = `<input type="number" placeholder="g/mol" value="${data[4] ? data[4] : ''}">`;
     cell7.innerHTML = `<input type="number" placeholder="mol/L" value="${data[5] ? data[5] : ''}">`;
     cell5.innerHTML = `<input type="number" placeholder="1" value="${data[6] ? data[6] : ''}">`;
-    cell8.innerHTML = `<button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button>`;
+    cell8.innerHTML = `<button onclick="editRow(this)" class="small-button">Edit</button> <button onclick="deleteRow(this)" class="small-button">Delete</button>`;
 }
 
 function addRow_Agents(ag = []) {
@@ -92,7 +92,7 @@ function addRow_Conditions(cond = []) {
 
     cell1.innerHTML = `<input type="number" placeholder="hour" value="${cond[0] ? cond[0] : ''}">`;
     cell2.innerHTML = `<input type="number" placeholder="centigrade" value="${cond[1] ? cond[1] : ''}">`;
-    cell3.innerHTML = `<button onclick="editRow(this)">Edit</button> <button onclick="deleteRow(this)">Delete</button>`;
+    cell3.innerHTML = `<button onclick="editRow(this)" class="small-button">Edit</button><button onclick="deleteRow(this)" class="small-button">Delete</button>`;
 }
 
 function editRow(button) {
@@ -115,7 +115,9 @@ function deleteRow(button) {
 
 let jsmeApplet;
 function jsmeOnLoad() {
-    jsmeApplet = new JSApplet.JSME("jsme_container", "380px", "340px", { options: "newlook" });
+    jsmeApplet = new JSApplet.JSME("jsme_container", "100%", "100%", {
+        "options": "newlook",
+    });
 }
 function getSmiles() {
     let smiles = jsmeApplet.smiles();
