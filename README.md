@@ -30,7 +30,7 @@
    - [express](https://expressjs.com/) 是一个 web application 框架, 可以用于搭建网页.
    - [ejs](https://ejs.bootcss.com/) 是一个 JavaScript 模板引擎, 帮你利用普通的 JavaScript 代码生成 HTML 页面.
   
-3. **运行服务器**: 在终端运行
+3. **运行服务器**: 在终端运行（在目录`ChemPrompter/`下）
    ```
    node app.js
    ```
